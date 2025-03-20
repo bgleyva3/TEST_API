@@ -1,6 +1,5 @@
-import { useState, useRef } from 'react'
 import './App.css'
-import { GoogleMap, useJsApiLoader, StandaloneSearchBox } from '@react-google-maps/api'
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import AutoCompletePlaces from './AutoCompletePlaces'
 
 const mapContainerStyle = {
@@ -15,24 +14,18 @@ const center = {
 }
 
 function App() {
-  const inputref = useRef(null)
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: '',
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ['places']
   })
-
-  const handleOnPlacesChanged = () => {
-    let address = inputref.current.getPlaces()
-    console.log('address:', address)
-  }
 
   return (
     <>
       <div style={{marginTop:"10%", textAlign:"center"}}>
         {isLoaded &&
           <AutoCompletePlaces
-            apiKey={''}
+            apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
             placeholder='Escribe aquí el nombre del lugar a para enviar el pedido.'
           >
           </AutoCompletePlaces>
